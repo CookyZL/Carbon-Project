@@ -59,8 +59,6 @@ const SingleSection = (props) => {
 
           <TableRow>
             <StyledTableCell>Name</StyledTableCell>
-            <StyledTableCell >Status</StyledTableCell>
-            <StyledTableCell align="center">Promote</StyledTableCell>
             <StyledTableCell align="center">Delete</StyledTableCell>
           </TableRow>
         </TableHead>
@@ -68,13 +66,7 @@ const SingleSection = (props) => {
         <StyledTableRow >
               <StyledTableCell component="th" scope="row">
                 Yuki Lin
-              </StyledTableCell>
-              <StyledTableCell align="right">Admin</StyledTableCell>
-              <StyledTableCell align="right">
-                <Button size="small" color="success" variant="outlined" >
-                  Promote
-                </Button>
-              </StyledTableCell>
+              </StyledTableCell>s
               <StyledTableCell align="right">
               <Button size="small" color="error" variant="outlined" align="right">
                   Delete
