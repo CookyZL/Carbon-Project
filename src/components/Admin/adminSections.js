@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { withRouter } from "react-router-dom";
 import CreateSection from "./Sections/CreateSections"
 import {
@@ -17,6 +18,8 @@ import {
   TableHead,
 } from "@mui/material";
 import { styled } from '@mui/material/styles';
+import config from "../../config.js";
+import SingleSection from './Sections/Single_Section';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -42,8 +45,25 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 const AdminSection = (props) => {
   const [sections, setSections] = useState([]);
 
+  useEffect(() => {
+    function getSection() {
+      axios
+        .get(config.SERVER_URL + '/api/admin/sections')
+        .then((res) => {
+          setSections((res.data).allSections);
+        })
+        .catch((err) => console.log(err));
+    }
+    getSection();
+  }, []);
+
+  const handleUpdateSection = () => {
+    setSections(sections.map());
+  };
+
   return (
     <>
+    
       <Grid container spacing={2}
       sx={{
         display:"flex",
@@ -74,11 +94,18 @@ const AdminSection = (props) => {
                 </TableRow>
               </TableHead>
               <TableBody>
-              <StyledTableRow>
                 {sections.map((section, index) => {
-                  return <></>;
+                  return (
+                    <>
+                    <SingleSection
+                      key={index}
+                      data={section}
+                      handleUpdateSection={handleUpdateSection}
+                    />
+                    </>
+                  );
                 })}
-                </StyledTableRow>
+
               </TableBody>
             </Table>
           </TableContainer>

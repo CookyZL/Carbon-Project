@@ -3,13 +3,29 @@ import styled from 'styled-components';
 import { Formik } from 'formik';
 import Modal from 'react-modal';
 import axios from 'axios';
+import config from '../../../config.js'
 
 // Component declaration
 
 const CreateSection = (props) => {
 
+  const [sections, setSections] = useState([]);
   const [createSectiontModalOpen, setCreateSectionModalOpen] = useState(false);
   
+  useEffect(() => {
+    function getSection() {
+      axios
+        .get(config.SERVER_URL + '/api/admin/sections')
+        .then((res) => {
+          setSections(res.data)
+         // window.location.reload();
+        })
+        .catch((err) => console.log(err));
+    }
+    getSection();
+  }, []);
+
+
   const modalCustomStyles = {
     content: {
       top: '50%',
@@ -27,7 +43,7 @@ const CreateSection = (props) => {
           label="Create Section"
           onClick = {() => setCreateSectionModalOpen(true)}
         >
-          Create Project
+          Create Section
         </Buttons>
 
         <Modal
@@ -45,6 +61,24 @@ const CreateSection = (props) => {
               errors.sectionName = 'Section Name required';
             return errors;
           }}
+
+          onSubmit={(values, { setSubmitting }) => {
+            axios
+              .post(config.SERVER_URL + '/api/admin/createSection', {
+                sectionName: values.sectionName,
+              })
+              .then((res) => {
+                alert(`Section ${values.sectionName} successfully created!`);
+                window.location.reload();
+                setSections((prevState) => [...prevState, res.data.section]);
+                setCreateSectionModalOpen(false);
+                setSubmitting(false);
+              })
+              .catch((err) => {
+                //alert(err);
+              });
+          }}
+
         >
         {(formik) => (
           <form onSubmit={formik.handleSubmit}>
