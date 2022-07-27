@@ -69,10 +69,9 @@ const AdminPage = () => {
         <Grid item xs={12}>
           <Switch>
             {/* <Route exact path="/" component={AdminPage} /> */}
-            <Route path="/admin/adminProjects" component={Dashboard} /> 
+            <Route path="/admin/adminProjects" component={AdminProjects} /> 
             <Route path="/admin/adminUsers" component={AdminUsers} />
             <Route path="/admin/adminSections" component={AdminSection} />
-            {/* should change to corresponding component after implementation*/}
           </Switch>
         </Grid>
       </Grid>
